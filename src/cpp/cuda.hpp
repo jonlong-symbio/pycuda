@@ -726,6 +726,13 @@ namespace pycuda
       static void synchronize()
       { CUDAPP_CALL_GUARDED_THREADED(cuCtxSynchronize, ()); }
 
+      static void sync_context() {
+        CUcontext ctx;
+        CUDAPP_CALL_GUARDED(cuCtxGetCurrent, (&ctx));
+        boost::shared_ptr<context> ctx_ptr(new context(ctx));
+        context_stack::get().push(ctx_ptr);
+      }
+
       static boost::shared_ptr<context> current_context(context *except=0)
       {
         while (true)

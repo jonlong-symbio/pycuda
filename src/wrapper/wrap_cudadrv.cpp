@@ -1118,6 +1118,9 @@ BOOST_PYTHON_MODULE(_driver)
       .def("get_current", (boost::shared_ptr<cl> (*)()) &cl::current_context)
       .staticmethod("get_current")
 
+      .def("sync", &cl::sync_context)
+      .staticmethod("sync")
+
 #if CUDAPP_CUDA_VERSION >= 3010
       .DEF_SIMPLE_METHOD(set_limit)
       .staticmethod("set_limit")
